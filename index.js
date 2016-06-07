@@ -48,7 +48,9 @@ var SmartBanner = function(options) {
 			android: 'FREE',
 			windows: 'FREE'
 		},
-		force: false // put platform type (ios, android, etc.) here for emulation
+		force: false, // put platform type (ios, android, etc.) here for emulation,
+		onShow: null,
+		onHide: null
 	}, options || {});
 
 	if (this.options.force) {
@@ -127,9 +129,15 @@ SmartBanner.prototype = {
 	},
 	hide: function() {
 		root.classList.remove('smartbanner-show');
+		if (this.options.onHide) {
+			this.options.onHide();
+		}
 	},
 	show: function() {
 		root.classList.add('smartbanner-show');
+		if (this.options.onShow) {
+			setTimeout(this.options.onShow, 0);
+		}
 	},
 	close: function() {
 		this.hide();
